@@ -453,6 +453,30 @@ $ docker-compose logs confluent-zookeeper | grep -i "binding to port"
 confluent-zookeeper_1  | [2017-04-03 19:26:47,764] INFO binding to port 0.0.0.0/0.0.0.0:32181 (org.apache.zookeeper.server.NIOServerCnxnFactory)
 ```
 
+You can also use Zookeeper's [Four Letter Words](https://zookeeper.apache.org/doc/trunk/zookeeperAdmin.html#The+Four+Letter+Words) to
+perform additional checks (here: `stat`):
+
+```bash
+$ docker-compose exec confluent-kafka-1 bash -c "echo stat | nc localhost 32181"
+
+# You should see a line similar to:
+Zookeeper version: 3.4.9-1757313, built on 08/23/2016 06:50 GMT
+Clients:
+ /127.0.0.1:53908[1](queued=0,recved=42,sent=42)
+ /127.0.0.1:53906[1](queued=0,recved=78,sent=80)
+ /127.0.0.1:53920[0](queued=0,recved=1,sent=0)
+ /127.0.0.1:53904[1](queued=0,recved=55,sent=55)
+
+Latency min/avg/max: 0/2/27
+Received: 184
+Sent: 185
+Connections: 4
+Outstanding: 0
+Zxid: 0x37
+Mode: standalone
+Node count: 23
+```
+
 Verify that the first Kafka broker (with `broker.id == 1`) is healthy:
 
 ```bash
