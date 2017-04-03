@@ -215,10 +215,10 @@ Now we can run any of the Kafka Streams API examples.  Each example such as
 the [WordCountLambdaExample](https://github.com/confluentinc/examples/blob/3.2.x/kafka-streams/src/main/java/io/confluent/examples/streams/WordCountLambdaExample.java)
 ships with instructions how to use it.  The only parts in the instructions of an example that we need to modify are
 **where to find the Kafka brokers** aka Kafka's `bootstrap.servers` parameter because the instructions in the examples
-assume `localhost:9092` by default.
+assume `localhost:9092` by default:
 
-* **Mac and Windows users**: `bootstrap.servers` is `$DOCKER_MACHINE_IP:29092`
-* **Linux users**: `bootstrap.servers` is `$localhost:29092`
+* **Mac and Windows users**: `bootstrap.servers` is `$DOCKER_MACHINE_IP:29092` (e.g. `192.168.99.100:29092`)
+* **Linux users**: `bootstrap.servers` is `localhost:29092`
 
 > Tip: You can also specify multiple brokers as `bootstrap.servers`.  Mac and Windows users, for example, could also set
 > `bootstrap.servers` to `$DOCKER_MACHINE_IP:29092,$DOCKER_MACHINE_IP:39092,$DOCKER_MACHINE_IP:49092`.
