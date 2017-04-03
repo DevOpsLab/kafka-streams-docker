@@ -247,12 +247,12 @@ $ cd ~/kafka-streams-docker
 # Create the application's input topic "TextLinesTopic".
 $ docker-compose exec confluent-kafka-1 kafka-topics \
     --create --topic TextLinesTopic \
-    --zookeeper localhost:32181 --partitions 1 --replication-factor 1
+    --zookeeper localhost:32181 --partitions 1 --replication-factor 3
 
 # Create the application's output topic "WordsWithCountsTopic".
 $ docker-compose exec confluent-kafka-1 kafka-topics \
     --create --topic WordsWithCountsTopic \
-    --zookeeper localhost:32181 --partitions 1 --replication-factor 1
+    --zookeeper localhost:32181 --partitions 1 --replication-factor 3
 ```
 
 > **Tip:** If you have [Confluent Open Source](https://www.confluent.io/download/) installed locally on your host
@@ -264,7 +264,7 @@ $ docker-compose exec confluent-kafka-1 kafka-topics \
 > ```bash
 > $ /path/to/confluent-3.2.0/bin/kafka-topics \
 >     --create --topic TextLinesTopic \
->     --zookeeper localhost:32181 --partitions 1 --replication-factor 1
+>     --zookeeper localhost:32181 --partitions 1 --replication-factor 3
 > ```
 >
 > This direct approach is particularly helpful if, for example, you want to ingest some local data into Kafka during
