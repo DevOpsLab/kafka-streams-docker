@@ -174,8 +174,8 @@ At this point, the Kafka cluster is up and running.  To recap, we have now avail
 | Kafka broker (id 3) | `confluent-kafka-3`   | `$DOCKER_MACHINE_IP:49092`    | `localhost:49092`       |
 | ZooKeeper node      | `confluent-zookeeper` | `$DOCKER_MACHINE_IP:32181`    | `localhost:32181`       |
 
-Note: The Kafka brokers and the ZooKeeper node are both accessible from *other containers* via the `localhost:PORT`
-setting in the column "Access on Linux hosts" above.
+Note: The Kafka brokers and the ZooKeeper node are accessible from *other containers* via the `localhost:PORT` setting
+in the column "Endpoint on Linux hosts" above.
 
 
 <a name="run-demos"></a>
