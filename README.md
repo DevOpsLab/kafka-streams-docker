@@ -37,7 +37,7 @@ Kafka cluster.
 
 With the code and instructions in this repository, we will:
 
-1. Start a containerized, single-node Kafka cluster on your host machine, e.g. your Mac laptop, using
+1. Start a containerized, 3-node Kafka cluster on your host machine, e.g. your Mac laptop, using
    [Docker Compose](https://docs.docker.com/compose/) and Confluent's
    [Docker images for Confluent Platform](https://github.com/confluentinc/cp-docker-images); more precisely, we use
    [Confluent Open Source](https://www.confluent.io/download/) version 3.2.0 with Apache Kafka 0.10.2.0, i.e. the latest
@@ -141,7 +141,7 @@ $ eval $(docker-machine env confluent)
 <a name="start-kafka-cluster"></a>
 ## Step 2: Start the Kafka cluster
 
-Next, we start a containerized Kafka cluster (1 broker) with a ZooKeeper ensemble (1 node) in the background.
+Next, we start a containerized Kafka cluster (3 brokers) with a ZooKeeper ensemble (1 node) in the background.
 
 ```bash
 # Change into the `kafka-streams-docker` directory from step 1,
@@ -170,7 +170,9 @@ $ docker-compose ps
 # You should see the following:
                Name                            Command            State   Ports
 -------------------------------------------------------------------------------
-streamsdocker_confluent-kafka_1       /etc/confluent/docker/run   Up
+streamsdocker_confluent-kafka-1_1     /etc/confluent/docker/run   Up
+streamsdocker_confluent-kafka-2_1     /etc/confluent/docker/run   Up
+streamsdocker_confluent-kafka-3_1     /etc/confluent/docker/run   Up
 streamsdocker_confluent-zookeeper_1   /etc/confluent/docker/run   Up
 ```
 
@@ -183,14 +185,16 @@ $ docker-compose logs confluent-zookeeper | grep -i "binding to port"
 confluent-zookeeper_1  | [2017-04-03 19:26:47,764] INFO binding to port 0.0.0.0/0.0.0.0:32181 (org.apache.zookeeper.server.NIOServerCnxnFactory)
 ```
 
-Verify that the Kafka broker is healthy:
+Verify that the first Kafka broker (with `broker.id == 1`) is healthy:
 
 ```bash
-$ docker-compose logs confluent-kafka | grep -i "started (kafka.server.KafkaServer)"
+$ docker-compose logs confluent-kafka-1 | grep -i "started (kafka.server.KafkaServer)"
 
 # You should see a line similar to:
-confluent-kafka_1      | [2017-04-03 19:26:49,466] INFO [Kafka Server 1], started (kafka.server.KafkaServer)
+confluent-kafka-1_1    | [2017-04-03 19:45:18,476] INFO [Kafka Server 1], started (kafka.server.KafkaServer)
 ```
+
+You can similarly verify the other Kafka brokers.
 
 
 <a name="cluster-ready"></a>
@@ -198,13 +202,15 @@ confluent-kafka_1      | [2017-04-03 19:26:49,466] INFO [Kafka Server 1], starte
 
 At this point, the Kafka cluster is up and running.  To recap, we have now available to us:
 
-| Service        | Container name      | Access on Mac/Windows hosts | Access on Linux hosts | Kafka parameter     |
-|----------------|---------------------|-----------------------------|-----------------------|---------------------|
-| Kafka broker   | confluent-kafka     | `$DOCKER_MACHINE_IP:29092`  | `localhost:29092`     | `bootstrap.servers` |
-| ZooKeeper node | confluent-zookeeper | `$DOCKER_MACHINE_IP:32181`  | `localhost:32181`     | `zookeeper.connect` |
+| Service             | Container name      | Access on Mac/Windows hosts | Access on Linux hosts | Kafka parameter     |
+|---------------------|---------------------|-----------------------------|-----------------------|---------------------|
+| Kafka broker (id 1) | confluent-kafka-1   | `$DOCKER_MACHINE_IP:29092`  | `localhost:29092`     | `bootstrap.servers` |
+| Kafka broker (id 2) | confluent-kafka-2   | `$DOCKER_MACHINE_IP:39092`  | `localhost:39092`     | `bootstrap.servers` |
+| Kafka broker (id 3) | confluent-kafka-3   | `$DOCKER_MACHINE_IP:49092`  | `localhost:49092`     | `bootstrap.servers` |
+| ZooKeeper node      | confluent-zookeeper | `$DOCKER_MACHINE_IP:32181`  | `localhost:32181`     | `zookeeper.connect` |
 
 
-Note: The Kafka broker and the ZooKeeper node are both accessible from *other containers* via the `localhost:PORT`
+Note: The Kafka brokers and the ZooKeeper node are both accessible from *other containers* via the `localhost:PORT`
 setting in the column "Access on Linux hosts" above.
 
 
@@ -272,12 +278,12 @@ Step 2: Create the input and output topics used by the WordCount application.
 $ cd ~/kafka-streams-docker
 
 # Create the application's input topic "TextLinesTopic".
-$ docker-compose exec confluent-kafka kafka-topics \
+$ docker-compose exec confluent-kafka-1 kafka-topics \
     --create --topic TextLinesTopic \
     --zookeeper localhost:32181 --partitions 1 --replication-factor 1
 
 # Create the application's output topic "WordsWithCountsTopic".
-$ docker-compose exec confluent-kafka kafka-topics \
+$ docker-compose exec confluent-kafka-1 kafka-topics \
     --create --topic WordsWithCountsTopic \
     --zookeeper localhost:32181 --partitions 1 --replication-factor 1
 ```
@@ -285,7 +291,7 @@ $ docker-compose exec confluent-kafka kafka-topics \
 > **Tip:** If you have [Confluent Open Source](https://www.confluent.io/download/) installed locally on your host
 > machine, then you can also run the Kafka CLI commands such as `kafka-topics` and `kafka-console-producer` in this
 > section directly from your host machine, rather than indirectly via `docker-compose exec ...` from inside the
-> `confluent-kafka` container.  For example, with Confluent Open Source available locally, the first
+> `confluent-kafka-1` container.  For example, with Confluent Open Source available locally, the first
 > `docker-compose exec` command above that executes `kafka-topics` could also be run directly on the host machine as:
 >
 > ```bash
@@ -300,7 +306,7 @@ $ docker-compose exec confluent-kafka kafka-topics \
 You can verify that topics were created successfully with `kafka-topics --list` or `kafka-topics --describe`:
 
 ```bash
-$ docker-compose exec confluent-kafka kafka-topics --describe --topic TextLinesTopic --zookeeper localhost:32181
+$ docker-compose exec confluent-kafka-1 kafka-topics --describe --topic TextLinesTopic --zookeeper localhost:32181
 Topic:TextLinesTopic    PartitionCount:1    ReplicationFactor:1    Configs:
         Topic: TextLinesTopic    Partition: 0    Leader: 1    Replicas: 1    Isr: 1
 ```
@@ -337,7 +343,7 @@ and write the results to the output topic "WordsWithCountsTopic".
 # (Mac and Windows users: ensure the new terminal is attached to Docker Machine, see above)
 
 # Start the console producer.
-$ docker-compose exec confluent-kafka kafka-console-producer \
+$ docker-compose exec confluent-kafka-1 kafka-console-producer \
     --broker-list localhost:29092 \
     --topic TextLinesTopic
 ```
@@ -363,7 +369,7 @@ Step 5: Inspect the resulting data in the output topic, e.g. via `kafka-console-
 # (Mac and Windows users: ensure the new terminal is attached to Docker Machine, see above)
 
 # Start the console consumer.
-$ docker-compose exec confluent-kafka kafka-console-consumer \
+$ docker-compose exec confluent-kafka-1 kafka-console-consumer \
     --bootstrap-server localhost:29092 --new-consumer \
     --topic WordsWithCountsTopic --from-beginning \
     --property print.key=true \
@@ -469,13 +475,17 @@ $ docker ps
 $ docker-compose ps
                Name                            Command            State   Ports
 -------------------------------------------------------------------------------
-streamsdocker_confluent-kafka_1       /etc/confluent/docker/run   Up
+streamsdocker_confluent-kafka-1_1     /etc/confluent/docker/run   Up
+streamsdocker_confluent-kafka-2_1     /etc/confluent/docker/run   Up
+streamsdocker_confluent-kafka-3_1     /etc/confluent/docker/run   Up
 streamsdocker_confluent-zookeeper_1   /etc/confluent/docker/run   Up
 
 $ docker ps
-CONTAINER ID    IMAGE                             COMMAND                  CREATED              STATUS             PORTS   NAMES
-6b4df758edc7    confluentinc/cp-kafka:3.2.0       "/etc/confluent/do..."   About a minute ago   Up About a minute          streamsdocker_confluent-kafka_1
-1069f1bcab51    confluentinc/cp-zookeeper:3.2.0   "/etc/confluent/do..."   About a minute ago   Up About a minute          streamsdocker_confluent-zookeeper_1
+CONTAINER ID     IMAGE                             COMMAND                  CREATED           STATUS          PORTS    NAMES
+1c88e5d3c24b     confluentinc/cp-kafka:3.2.0       "/etc/confluent/do..."   9 minutes ago     Up 9 minutes             streamsdocker_confluent-kafka-2_1
+ed549872edfb     confluentinc/cp-kafka:3.2.0       "/etc/confluent/do..."   9 minutes ago     Up 9 minutes             streamsdocker_confluent-kafka-3_1
+e6e914c12c41     confluentinc/cp-kafka:3.2.0       "/etc/confluent/do..."   9 minutes ago     Up 9 minutes             streamsdocker_confluent-kafka-1_1
+51a481408420     confluentinc/cp-zookeeper:3.2.0   "/etc/confluent/do..."   9 minutes ago     Up 9 minutes             streamsdocker_confluent-zookeeper_1
 ```
 
 Show ALL containers, including those that are not running:
@@ -498,7 +508,7 @@ $ docker-compose exec <container id or name> /bin/bash
 $ docker exec -ti <container id or name> /bin/bash
 
 # Example:
-$ docker-compose exec confluent-kafka /bin/bash
+$ docker-compose exec confluent-kafka-1 /bin/bash
 ```
 
 Show the logs of a running container:
@@ -513,6 +523,6 @@ $ docker-compose logs -f <container id or name>
 $ docker logs -f <container id or name>
 
 # Example:
-$ docker-compose logs -f confluent-kafka
+$ docker-compose logs -f confluent-kafka-1
 ```
 
