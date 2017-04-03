@@ -10,7 +10,6 @@
     * [Step 1: Clone this repository](#clone-repo)
     * [Step 1.5: Mac and Windows users only -- start Docker Machine](#start-docker-machine)
     * [Step 2: Start Kafka cluster](#start-kafka-cluster)
-    * [Done: Kafka cluster is ready!](#cluster-ready)
 * [Run Confluent demo applications for Kafka Streams API](#run-demos)
     * [Clone the examples repository](#clone-example-repo)
     * [Build and package the Kafka Streams API examples](#package-examples)
@@ -165,10 +164,6 @@ $ docker-compose up -d
 
 If you want to, you can [verify the health of the Kafka cluster](#verify-cluster-health) that you just deployed.
 
-
-<a name="cluster-ready"></a>
-## Done: Kafka cluster is ready!
-
 At this point, the Kafka cluster is up and running.  To recap, we have now available to us (cf.
 [docker-compose.yml](docker-compose.yml)):
 
@@ -178,7 +173,6 @@ At this point, the Kafka cluster is up and running.  To recap, we have now avail
 | Kafka broker (id 2) | `confluent-kafka-2`   | `$DOCKER_MACHINE_IP:39092`    | `localhost:39092`       |
 | Kafka broker (id 3) | `confluent-kafka-3`   | `$DOCKER_MACHINE_IP:49092`    | `localhost:49092`       |
 | ZooKeeper node      | `confluent-zookeeper` | `$DOCKER_MACHINE_IP:32181`    | `localhost:32181`       |
-
 
 Note: The Kafka brokers and the ZooKeeper node are both accessible from *other containers* via the `localhost:PORT`
 setting in the column "Access on Linux hosts" above.
