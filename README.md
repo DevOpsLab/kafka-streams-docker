@@ -202,12 +202,12 @@ You can similarly verify the other Kafka brokers.
 
 At this point, the Kafka cluster is up and running.  To recap, we have now available to us:
 
-| Service             | Container name        | Access on Mac/Windows hosts | Access on Linux hosts | Kafka parameter     |
-|---------------------|-----------------------|-----------------------------|-----------------------|---------------------|
-| Kafka broker (id 1) | `confluent-kafka-1`   | `$DOCKER_MACHINE_IP:29092`  | `localhost:29092`     | `bootstrap.servers` |
-| Kafka broker (id 2) | `confluent-kafka-2`   | `$DOCKER_MACHINE_IP:39092`  | `localhost:39092`     | `bootstrap.servers` |
-| Kafka broker (id 3) | `confluent-kafka-3`   | `$DOCKER_MACHINE_IP:49092`  | `localhost:49092`     | `bootstrap.servers` |
-| ZooKeeper node      | `confluent-zookeeper` | `$DOCKER_MACHINE_IP:32181`  | `localhost:32181`     | `zookeeper.connect` |
+| Service             | Container name        | Endpoint on Mac/Windows hosts | Endpoint on Linux hosts |
+|---------------------|-----------------------|-------------------------------|-------------------------|
+| Kafka broker (id 1) | `confluent-kafka-1`   | `$DOCKER_MACHINE_IP:29092`    | `localhost:29092`       |
+| Kafka broker (id 2) | `confluent-kafka-2`   | `$DOCKER_MACHINE_IP:39092`    | `localhost:39092`       |
+| Kafka broker (id 3) | `confluent-kafka-3`   | `$DOCKER_MACHINE_IP:49092`    | `localhost:49092`       |
+| ZooKeeper node      | `confluent-zookeeper` | `$DOCKER_MACHINE_IP:32181`    | `localhost:32181`       |
 
 
 Note: The Kafka brokers and the ZooKeeper node are both accessible from *other containers* via the `localhost:PORT`
