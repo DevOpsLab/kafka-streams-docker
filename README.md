@@ -421,7 +421,7 @@ $ docker-compose down
 > `docker-compose stop` (rather than `down`), and subsequently `docker-compose start` (rather than `up`) to re-start the
 > same cluster again.
 
-**Mac and Windows users only:**: If you also want to shutdown the Docker Machine:
+**Mac and Windows users only:** If you also want to shutdown the Docker Machine:
 
 ```shell
 # Option 1: Gracefully stop it but don't throw it away.
