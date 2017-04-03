@@ -200,7 +200,8 @@ You can similarly verify the other Kafka brokers.
 <a name="cluster-ready"></a>
 ## Done: Kafka cluster is ready!
 
-At this point, the Kafka cluster is up and running.  To recap, we have now available to us:
+At this point, the Kafka cluster is up and running.  To recap, we have now available to us (cf.
+[docker-compose.yml](docker-compose.yml):
 
 | Service             | Container name        | Endpoint on Mac/Windows hosts | Endpoint on Linux hosts |
 |---------------------|-----------------------|-------------------------------|-------------------------|
