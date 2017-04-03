@@ -256,6 +256,9 @@ assume `localhost:9092` by default.
 * **Mac and Windows users**: `bootstrap.servers` is `$DOCKER_MACHINE_IP:29092`
 * **Linux users**: `bootstrap.servers` is `$localhost:29092`
 
+> Tip: You can also specify multiple brokers as `bootstrap.servers`.  Mac and Windows users, for example, could also set
+> `bootstrap.servers` to `$DOCKER_MACHINE_IP:29092,$DOCKER_MACHINE_IP:39092,$DOCKER_MACHINE_IP:49092`.
+
 All examples allow us to override the `bootstrap.servers` parameter via a CLI argument, and for *most* examples you do
 so by providing the `bootstrap.servers` parameter as the *first* CLI argument (for examples demonstrating Kafka's
 [Interactive Queries](http://docs.confluent.io/3.2.0/streams/developer-guide.html#interactive-queries) feature, it is
