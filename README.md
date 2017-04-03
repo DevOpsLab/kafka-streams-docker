@@ -19,6 +19,7 @@
 * [Stop the containerized Kafka cluster](#Stop-cluster)
 * [Where to go from here](#next-steps)
 * [Appendix](#appendix)
+    * [Verify the health of the Kafka cluster](#verify-cluster-health)
     * [Helpful docker commands](#helpful-docker)
 ----
 
@@ -162,39 +163,7 @@ $ cd ~/kafka-streams-docker
 $ docker-compose up -d
 ```
 
-Verify that the containers are running:
-
-```bash
-$ docker-compose ps
-
-# You should see the following:
-               Name                            Command            State   Ports
--------------------------------------------------------------------------------
-streamsdocker_confluent-kafka-1_1     /etc/confluent/docker/run   Up
-streamsdocker_confluent-kafka-2_1     /etc/confluent/docker/run   Up
-streamsdocker_confluent-kafka-3_1     /etc/confluent/docker/run   Up
-streamsdocker_confluent-zookeeper_1   /etc/confluent/docker/run   Up
-```
-
-Verify that the ZooKeeper node is healthy:
-
-```bash
-$ docker-compose logs confluent-zookeeper | grep -i "binding to port"
-
-# You should see a line similar to:
-confluent-zookeeper_1  | [2017-04-03 19:26:47,764] INFO binding to port 0.0.0.0/0.0.0.0:32181 (org.apache.zookeeper.server.NIOServerCnxnFactory)
-```
-
-Verify that the first Kafka broker (with `broker.id == 1`) is healthy:
-
-```bash
-$ docker-compose logs confluent-kafka-1 | grep -i "started (kafka.server.KafkaServer)"
-
-# You should see a line similar to:
-confluent-kafka-1_1    | [2017-04-03 19:45:18,476] INFO [Kafka Server 1], started (kafka.server.KafkaServer)
-```
-
-You can similarly verify the other Kafka brokers.
+If you want to, you can [verify the health of the Kafka cluster](#verify-cluster-health) that you just deployed.
 
 
 <a name="cluster-ready"></a>
@@ -463,6 +432,44 @@ As next steps, you may want to:
 
 <a name="appendix"></a>
 # Appendix
+
+<a name="verify-cluster-health"></a>
+## Verify the health of the Kafka cluster
+
+Verify that the containers are running:
+
+```bash
+$ docker-compose ps
+
+# You should see the following:
+               Name                            Command            State   Ports
+-------------------------------------------------------------------------------
+streamsdocker_confluent-kafka-1_1     /etc/confluent/docker/run   Up
+streamsdocker_confluent-kafka-2_1     /etc/confluent/docker/run   Up
+streamsdocker_confluent-kafka-3_1     /etc/confluent/docker/run   Up
+streamsdocker_confluent-zookeeper_1   /etc/confluent/docker/run   Up
+```
+
+Verify that the ZooKeeper node is healthy:
+
+```bash
+$ docker-compose logs confluent-zookeeper | grep -i "binding to port"
+
+# You should see a line similar to:
+confluent-zookeeper_1  | [2017-04-03 19:26:47,764] INFO binding to port 0.0.0.0/0.0.0.0:32181 (org.apache.zookeeper.server.NIOServerCnxnFactory)
+```
+
+Verify that the first Kafka broker (with `broker.id == 1`) is healthy:
+
+```bash
+$ docker-compose logs confluent-kafka-1 | grep -i "started (kafka.server.KafkaServer)"
+
+# You should see a line similar to:
+confluent-kafka-1_1    | [2017-04-03 19:45:18,476] INFO [Kafka Server 1], started (kafka.server.KafkaServer)
+```
+
+You can similarly verify the other Kafka brokers.
+
 
 <a name="helpful-docker"></a>
 ## Helpful docker commands
