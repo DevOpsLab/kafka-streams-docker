@@ -2,14 +2,14 @@
 version: '2'
 services:
   confluent-zookeeper:
-    image: confluentinc/cp-zookeeper:3.2.0
+    image: confluentinc/cp-zookeeper:${CONFLUENT_VERSION}
     network_mode: host
     environment:
       ZOOKEEPER_CLIENT_PORT: 32181
       ZOOKEEPER_TICK_TIME: 2000
 
   confluent-kafka-1:
-    image: confluentinc/cp-kafka:3.2.0
+    image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
     network_mode: host
     depends_on:
       - confluent-zookeeper
@@ -19,7 +19,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://${DOCKER_MACHINE_IP}:29092
 
   confluent-kafka-2:
-    image: confluentinc/cp-kafka:3.2.0
+    image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
     network_mode: host
     depends_on:
       - confluent-zookeeper
@@ -29,7 +29,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://${DOCKER_MACHINE_IP}:39092
 
   confluent-kafka-3:
-    image: confluentinc/cp-kafka:3.2.0
+    image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
     network_mode: host
     depends_on:
       - confluent-zookeeper
