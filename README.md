@@ -101,8 +101,8 @@ documentation.  If you run into problems, Confluent's Docker Quickstart has trou
 If you just want to sit back and see what we will be doing in the subsequent sections, take a look at the following
 recording:
 
-<a href="https://asciinema.org/a/6cvv80pdg0ct9ge2py8hs1vrl">
-  <img src="https://asciinema.org/a/6cvv80pdg0ct9ge2py8hs1vrl.png" width="400" alt="Screencast: Start a containerized Kafka cluster, using Confluent's Docker images."/>
+<a href="https://asciinema.org/a/110606">
+  <img src="https://asciinema.org/a/110606.png" width="400" alt="Screencast: Start a containerized Kafka cluster, using Confluent's Docker images."/>
 </a><br />
 <strong>Screencast: Start a containerized Kafka cluster, using Confluent's Docker images.</strong>
 
@@ -190,8 +190,8 @@ in the column "Endpoint on Linux hosts" above.
 If you just want to sit back and see what we will be doing in the subsequent sections, take a look at the following
 recording:
 
-<a href="https://asciinema.org/a/7ha6heaopwm5ktoqrgvrbn72w">
-  <img src="https://asciinema.org/a/7ha6heaopwm5ktoqrgvrbn72w.png" width="400" alt="Screencast: Run the WordCount demo application against the containerized Kafka cluster."/>
+<a href="https://asciinema.org/a/110608">
+  <img src="https://asciinema.org/a/110608.png" width="400" alt="Screencast: Run the WordCount demo application against the containerized Kafka cluster."/>
 </a><br />
 <strong>Screencast: Run the WordCount demo application against the containerized Kafka cluster.</strong>
 
