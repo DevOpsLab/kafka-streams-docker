@@ -98,6 +98,14 @@ Here, we essentially follow the
 [Confluent Docker Quickstart](http://docs.confluent.io/3.2.0/cp-docker-images/docs/quickstart.html) in the Confluent
 documentation.  If you run into problems, Confluent's Docker Quickstart has troubleshooting tips available.
 
+If you just want to sit back and see what we will be doing in the subsequent sections, take a look at the following
+recording:
+
+<a href="https://asciinema.org/a/6cvv80pdg0ct9ge2py8hs1vrl">
+  <img src="https://asciinema.org/a/6cvv80pdg0ct9ge2py8hs1vrl.png" width="400" alt="Screencast: Start a containerized Kafka cluster, using Confluent's Docker images."/>
+</a><br />
+<strong>Screencast: Start a containerized Kafka cluster, using Confluent's Docker images.</strong>
+
 
 <a name="clone-repo"></a>
 ## Step 1: Clone this repository
@@ -150,12 +158,10 @@ $ cd ~/kafka-streams-docker
 ```
 
 > **Additional command for Mac and Windows users:**
+> Make the Docker Machine's IP address available via the `DOCKER_MACHINE_IP`
+> environment variable, which is used by [docker-compose.yml](docker-compose.yml).
 >
-> ```bash
-> # Make the Docker Machine's IP address available via the DOCKER_MACHINE_IP
-> # environment variable, which is used by docker-compose.yml.
-> $ export DOCKER_MACHINE_IP=`docker-machine ip confluent`
-> ```
+>     $ export DOCKER_MACHINE_IP=`docker-machine ip confluent`
 
 ```bash
 # Start the cluster
@@ -180,6 +186,14 @@ in the column "Endpoint on Linux hosts" above.
 
 <a name="run-demos"></a>
 # Run Confluent demo applications for Kafka Streams API
+
+If you just want to sit back and see what we will be doing in the subsequent sections, take a look at the following
+recording:
+
+<a href="https://asciinema.org/a/7ha6heaopwm5ktoqrgvrbn72w">
+  <img src="https://asciinema.org/a/7ha6heaopwm5ktoqrgvrbn72w.png" width="400" alt="Screencast: Run the WordCount demo application against the containerized Kafka cluster."/>
+</a><br />
+<strong>Screencast: Run the WordCount demo application against the containerized Kafka cluster.</strong>
 
 
 <a name="clone-examples-repo"></a>
@@ -261,11 +275,9 @@ $ docker-compose exec confluent-kafka-1 kafka-topics \
 > `confluent-kafka-1` container.  For example, with Confluent Open Source available locally, the first
 > `docker-compose exec` command above that executes `kafka-topics` could also be run directly on the host machine as:
 >
-> ```bash
-> $ /path/to/confluent-3.2.0/bin/kafka-topics \
->     --create --topic TextLinesTopic \
->     --zookeeper localhost:32181 --partitions 1 --replication-factor 3
-> ```
+>     $ /path/to/confluent-3.2.0/bin/kafka-topics \
+>         --create --topic TextLinesTopic \
+>         --zookeeper localhost:32181 --partitions 1 --replication-factor 3
 >
 > This direct approach is particularly helpful if, for example, you want to ingest some local data into Kafka during
 > iterative development or for testing and debugging.
