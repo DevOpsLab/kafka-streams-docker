@@ -2,9 +2,9 @@
 
 > **Update June 2017: A better tutorial is now officially available from Confluent.**
 >
-> * Tutorial: http://docs.confluent.io/current/cp-docker-images/docs/tutorials/kafka-streams-examples.html
+> * Tutorial: https://docs.confluent.io/current/streams/kafka-streams-examples/docs/index.html
 > * Blog post: https://www.confluent.io/blog/getting-started-with-the-kafka-streams-api-using-confluent-docker-image/
-> * Code and Docker images: https://github.com/confluentinc/cp-docker-images
+> * Code and Docker images: https://github.com/confluentinc/kafka-streams-examples
 
 
 ----
